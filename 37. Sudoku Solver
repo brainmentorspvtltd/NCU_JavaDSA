@@ -1,0 +1,67 @@
+class Solution {
+    
+    boolean isValid(char board[][],int row, int col, char a){
+        
+        
+        //row
+        for(int i=0;i<9;i++){
+           if( board[row][i]==a){
+              return false;  
+            }
+        }
+        //col
+        for(int i=0;i<9;i++){
+           if( board[i][col]==a){
+              return false;  
+            }
+        }
+        //matrix
+        int m,n;
+        m=row-row%3;
+        n=col-col%3;
+        
+        for(int i=m;i<m+3;i++){
+            for(int j=n;j<n+3;j++){
+                 if( board[i][j]==a){
+              return false;  
+            }
+            }                              
+        }
+        return true;
+    }
+    boolean solver(char board[][], int row,int col){
+        
+      
+        if(row==9 && col==8){
+            return true;
+        }
+        if(row==9){
+            row=0;
+            col=col+1;
+        }
+        int a=48;
+        if(board[row][col]!='.'){
+           return  solver(board,row+1,col);
+        }
+        for(int i=1;i<=9;i++){
+            
+            if(isValid(board,row,col,(char)(i+a))){
+                board[row][col]=(char)(i+a);
+                
+                if(solver(board, row+1,col)==false){
+                    board[row][col]='.';
+                }
+               else{
+                   return true;
+               } 
+            }
+        }
+        
+        return false;
+        }
+    
+    public void solveSudoku(char[][] board) {
+        solver(board,0,0 );
+    
+    }
+}
