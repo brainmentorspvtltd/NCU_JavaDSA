@@ -1,0 +1,54 @@
+class Solution {
+    int p=0;
+    
+    boolean checkLand(int grid[][], int i, int j){
+        if(i>=0 && i< grid.length && j>=0 && j< grid[0].length && grid[i][j]==1 ){
+            return true;
+        }
+        
+        return false;
+    }
+    int checkper(int grid[][],int i, int j){
+       int land=0;
+        if(checkLand(grid,i+1,j)==true){
+            land++;
+        }
+        if(checkLand(grid,i,j+1)==true){
+            land++;
+        }
+        if(checkLand(grid,i-1,j)==true){
+            land++;
+        }
+        if(checkLand(grid,i,j-1)==true){
+            land++;
+        }
+        
+        return (4-land);
+        
+    }
+    void peri(int grid[][], int i, int j){
+        
+        if(i==grid.length && j==grid[0].length-1){
+            return;
+        }
+        if(i==grid.length){
+            i=0;
+            j=j+1;
+        }
+        
+        if(grid[i][j]==0){
+             peri(grid, i+1,j);
+        }
+        else{
+            p +=checkper(grid, i , j);
+            peri(grid, i+1,j);
+            
+        }
+    }
+    public int islandPerimeter(int[][] grid) {
+        
+        peri(grid,0,0);
+        return p;
+        
+    }
+}
